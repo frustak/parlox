@@ -1,0 +1,9 @@
+var t = 1;
+
+// Hmmmm
+fun test() {
+    return "something more";
+}
+
+var b = t - 1 + 2 / 3 * 4.2;
+

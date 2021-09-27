@@ -59,15 +59,7 @@ fn run(source: &str) -> Result<(), Vec<SyntaxError>> {
     let tokens = scanner.scan_tokens()?;
 
     for token in tokens {
-        if let Some(literal) = &token.literal {
-            if let Some(number) = literal.downcast_ref::<f64>() {
-                println!("{:?}, literal: {:?}", token, number);
-            } else if let Some(text) = literal.downcast_ref::<String>() {
-                println!("{:?}, literal: {:?}", token, text);
-            }
-        } else {
-            println!("{:?}", token);
-        }
+        println!("{:?}", token);
     }
 
     Ok(())

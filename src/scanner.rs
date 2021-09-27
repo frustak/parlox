@@ -1,8 +1,14 @@
 use crate::{
-    token::Token,
+    token::{Debuggable, Token},
     token_kind::{TokenKind, KEYWORDS},
 };
-use std::any::Any;
+use std::fmt::Debug;
+
+#[derive(Debug)]
+pub struct SyntaxError {
+    line: u32,
+    message: String,
+}
 
 pub struct Scanner {
     source: String,
@@ -11,12 +17,6 @@ pub struct Scanner {
     start: usize,
     current: usize,
     line: u32,
-}
-
-#[derive(Debug)]
-pub struct SyntaxError {
-    line: u32,
-    message: String,
 }
 
 impl Scanner {
@@ -173,7 +173,7 @@ impl Scanner {
         self.add_token(*token_type, None);
     }
 
-    fn add_token(&mut self, token_type: TokenKind, literal: Option<Box<dyn Any>>) {
+    fn add_token(&mut self, token_type: TokenKind, literal: Option<Debuggable>) {
         let text = self.source[self.start..self.current].to_string();
         let token = Token::new(token_type, text, literal, self.line);
         self.tokens.push(token);

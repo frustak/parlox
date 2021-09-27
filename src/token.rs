@@ -1,16 +1,16 @@
 use crate::token_kind::TokenKind;
-use std::any::Any;
+use std::fmt::Debug;
 
 #[derive(Debug)]
-pub struct Token {
+pub struct GenericToken<T: Debug> {
     pub kind: TokenKind,
     pub lexeme: String,
-    pub literal: Option<Box<dyn Any>>,
+    pub literal: T,
     pub line: u32,
 }
 
-impl Token {
-    pub fn new(kind: TokenKind, lexeme: String, literal: Option<Box<dyn Any>>, line: u32) -> Self {
+impl<T: Debug> GenericToken<T> {
+    pub fn new(kind: TokenKind, lexeme: String, literal: T, line: u32) -> Self {
         Self {
             kind,
             lexeme,
@@ -19,3 +19,6 @@ impl Token {
         }
     }
 }
+
+pub type Debuggable = Box<dyn Debug>;
+pub type Token = GenericToken<Option<Debuggable>>;
